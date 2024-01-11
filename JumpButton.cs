@@ -1,36 +1,35 @@
 using UnityEngine;
-using UnityEngine.UI; // Import the UI namespace
+using UnityEngine.UI;
 
 public class JumpButton : MonoBehaviour
 {
-    public MovementScript movementScript; // Reference to your MovementScript component
-    private bool canJump = true;
-    private float jumpCooldown = 1.0f; // Adjust the cooldown time as needed
-    private float lastJumpTime = 0.0f;
+    public MovementScript movementScript;
 
-    // Attach this method to the button's OnClick event in the Unity Inspector.
+    private void Update()
+    {
+        // For testing purposes, check if the space bar is pressed.
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Space bar pressed");
+            TryJump();
+        }
+    }
+
     public void OnJumpButtonClick()
-{
-    if (canJump && Time.time - lastJumpTime >= jumpCooldown)
+    {
+        Debug.Log("Jump button clicked");
+        TryJump();
+    }
+
+    private void TryJump()
     {
         if (movementScript != null)
         {
-            movementScript.PerformJump(); // Call the jump method from MovementScript
-            lastJumpTime = Time.time; // Record the time of the last jump
-            canJump = false; // Set the flag to prevent rapid clicks
+            movementScript.PerformJump();
+        }
+        else
+        {
+            Debug.LogError("MovementScript is not assigned!");
         }
     }
-}
-
-void Update()
-{
-    // Check if cooldown has passed and enable jumping again
-    if (!canJump && Time.time - lastJumpTime >= jumpCooldown)
-    {
-        canJump = true;
-    }
-
-    // Rest of your Update() code...
-}
-
 }

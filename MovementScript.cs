@@ -40,13 +40,26 @@ public class MovementScript : MonoBehaviour
             // Use joystick input if available
             horizontalMove = joy.Horizontal;
             verticalMove = joy.Vertical;
+
+            // Check for jumping input from the joystick
+            if (Input.GetButtonDown("Jump"))
+            {
+                PerformJump();
+            }
         }
         else
         {
             // Use keyboard input if joystick is not active
             horizontalMove = Input.GetAxis("Horizontal");
             verticalMove = Input.GetAxis("Vertical");
+
+            // Check for jumping input from the keyboard
+            if (Input.GetButtonDown("Jump"))
+            {
+                PerformJump();
+            }
         }
+
 
         Vector3 moveDirection = new Vector3(horizontalMove, 0, verticalMove);
 
